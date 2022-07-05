@@ -25,8 +25,17 @@ canvas.height=200;
 let imageURL = '';
 LoadImage(imageURL);
 
+let i=0;
+let j=0;
+let newframe_left=0;
+let newframe_top=0;
+
 
 // interactions
+window.onload = function() {
+    GetNewFrameLocation(); // determine free space to draw a new frame on the board
+};
+
 document.getElementById('resolution').onchange = function(){
     resolution = Number(document.getElementById('resolution').value);
 }
@@ -35,24 +44,50 @@ document.getElementById('btn_start').onclick = function() {
 
     ClosePanel(); // close app panel
 
-    DrawFrame();
+    CreateNewFrame();
 
-    var i, j; // scan rows and columns of pasted image at intervals and draw corresponding sticky color
+    // scan rows and columns of pasted image at intervals and draw corresponding sticky color
+    i=0; // horizontal scan lines
+    j=0; // vertical scan lines
+    
+
+    // StickyDrawLoop();
+    
+    // setTimeout(function() { // add short delay between drawing stickies to relief sync buffer
+    //
+    //         // for (j=0; j<(resolution); j++) {
+    //
+    //         //     var pixelmid = (200/resolution)/2;
+    //         //     var pixel = context.getImageData(i*(200/resolution)+pixelmid, j*(200/resolution)+pixelmid, 1, 1).data;
+    //         //     var color = GetColorName(pixel[0],pixel[1],pixel[2]); // RGB value of pixel
+    //         //
+    //         //     AddSticky(i,j,color);
+    //         // }
+    //
+    //     i++;                      //  increment counter
+    //     if (i < resolution) {     //  if the counter < resolution, call the loop function
+    //         StickyDrawLoop();             //  again which will trigger another
+    //     }
+    //
+    // }, 50); // pace at 20 stickies per second
+
+
     for (i=0; i<(resolution); i++) {
         for (j=0; j<(resolution); j++) {
             var pixelmid = (200/resolution)/2;
             var pixel = context.getImageData(i*(200/resolution)+pixelmid, j*(200/resolution)+pixelmid, 1, 1).data;
             var color = GetColorName(pixel[0],pixel[1],pixel[2]); // RGB value of pixel
+
             AddSticky(i,j,color);
         }
     }
 }
 
-
 window.addEventListener('paste', function(e){
 
     if(e.clipboardData == false) return false;
     var imgs = e.clipboardData.items;
+
     if(imgs == undefined) return false;
 
     for (var i = 0; i < imgs.length; i++) {
@@ -61,7 +96,7 @@ window.addEventListener('paste', function(e){
         var url = window.URL || window.webkitURL;
         var src = url.createObjectURL(imgObj);
         // context.clearRect(0,0,canvas.width,canvas.height);
-        context.fillStyle = '#ffF';
+        context.fillStyle = '#fff';
         context.fillRect(0, 0, canvas.width, canvas.height);
         LoadImage(src);
         document.getElementById('hint').style.display = 'none'; // hide hint text
@@ -70,15 +105,69 @@ window.addEventListener('paste', function(e){
 
 
 // functions
-function LoadImage(src){
+function LoadImage(src) {
     var img = new Image();
-    img.onload = function(e) {
-        context.drawImage(img,0,0,200,200);
+    var mywidth, myheight, myleft, mytop;
+    img.onload = function() {
+        if (this.width > this.height) { // landscape ratio
+            mywidth = 200;
+            myheight = 200*(this.height/this.width);
+            myleft = 0;
+            mytop = (200-myheight)/2
+        } else { // portrait ratio or square
+            mywidth = 200*(this.width/this.height);
+            myheight = 200;
+            myleft = (200-mywidth)/2;
+            mytop = 0;
+        }
+        context.drawImage(img,myleft,mytop,mywidth,myheight);
     };
     img.src = src;
 }
 
-function GetColorName(r,g,b) { // find nearest sticky color that best matches the pixel RGB value
+
+async function GetNewFrameLocation() {
+    const allframes = await miro.board.get({
+        type: 'frame'
+    });
+
+    allframes.forEach(function(item) { // determing left most and top most free spot on the board
+        if ((item.x + item.width/2) > newframe_left) {
+            newframe_left = item.x + item.width/2;
+        }
+        if ((item.y - item.height/2) < newframe_top) {
+            newframe_top = item.y - item.height/2
+        }
+    })
+}
+
+
+async function CreateNewFrame() { // find the most top right frame on the boars and create new one next to it
+
+    let mywidth =  45 * (2 + resolution);
+    let myheight = 45 * (2 + resolution);
+    let my_x = newframe_left + mywidth/2 + 100; // margin 100px between frames
+    let my_y = newframe_top + myheight/2 + 0
+    
+    const myframe = await miro.board.createFrame({
+        title: '',
+        style: {
+            fillColor: '#ffffff',
+        },
+        x: my_x, // Default value: horizontal center of the board
+        y: my_y, // Default value: vertical center of the board
+        width: mywidth,
+        height: myheight
+    });
+
+    await miro.board.viewport.zoomTo(myframe);
+}
+
+
+
+
+
+function GetColorName(r,g,b) { // find nearest sticky color that best matches the passed RGB value
 
   var s, dx, dy, dz, distance
   let shortest_distance = 500;
@@ -98,29 +187,9 @@ function GetColorName(r,g,b) { // find nearest sticky color that best matches th
   return(sticky_colors[nearest_color][0]);
 }
 
-async function DrawFrame() {
-
-    let mywidth =  45 * (2 + resolution);
-    let myheight = 45 * (2 + resolution);
-    let my_x = mywidth/2-(45*1.5);
-    let my_y = myheight/2-(45*1.5);
-
-    const myframe = await miro.board.createFrame({
-        title: '',
-        style: {
-            fillColor: '#ffffff',
-        },
-        x: my_x, // Default value: horizontal center of the board
-        y: my_y, // Default value: vertical center of the board
-        width: mywidth,
-        height: myheight
-    });
-
-    await miro.board.viewport.zoomTo(myframe);
-}
 
 async function AddSticky(o,p,mycolor) {
-
+    
     if (mycolor == "gray") {
         // dont draw a sticky when it's white
     } else {
@@ -131,13 +200,15 @@ async function AddSticky(o,p,mycolor) {
                 textAlign: 'center', // Default alignment: center
                 textAlignVertical: 'middle', // Default alignment: middle
             },
-            x: o*45, // Default value: horizontal center of the board
-            y: p*45, // Default value: vertical center of the board
+            x: newframe_left + (o+3.5)*45, // Default value: horizontal center of the board
+            y: newframe_top + (p+1.5)*45, // Default value: vertical center of the board
             shape: 'square',
             width: 40, // Set either 'width', or 'height'
         });
+
     }
 }
+
 
 async function ClosePanel() {
     await miro.board.ui.closePanel();

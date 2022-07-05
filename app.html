@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/assets/style.css" />
-    <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
+    <script type="module" src="https://miro.com/app/static/sdk/v2/miro.js"></script>
   </head>
   <body>
     
@@ -12,28 +12,28 @@
 
       <div class="cs1 ce12">
 
-          <p>Paste an image in the box below, set a grid size and instantly create a wall of stickies.</p>
+          <div>Paste an image in the box below, set a grid size and instantly create a wall of stickies.</div>
 
-            <div class="verticalmargin"></div>
+        <div class="verticalmargin"></div>
 
-            <div class="pastebox">
-              <div id="hint" class="hint">Paste image here<br />(Ctrl+V)</div>
-              <canvas id="myCanvas" class="canvas" width="200" height="200"></canvas>
-            </div>
+        <div class="pastebox">
+          <div id="hint" class="hint">Paste image here<br />(Ctrl+V)</div>
+          <canvas id="myCanvas" class="canvas" width="200" height="200"></canvas>
+        </div>
 
-            <div class="verticalmargin"></div>
+        <div class="verticalmargin"></div>
 
-            <select class="select" id="resolution">
-                  <option value="10">10 x 10</option>
-                  <option value="20" selected>20 x 20</option>
-                  <option value="30">30 x 30</option>
-                  <option value="40">40 x 40</option>
-                  <option value="50">50 x 50</option>
-            </select>
+        <select class="select" id="resolution">
+              <option value="10">10 x 10</option>
+              <option value="20" selected>20 x 20</option>
+              <option value="30">30 x 30</option>
+              <option value="40">40 x 40</option>
+              <option value="50">50 x 50</option>
+        </select>
 
-            <div class="verticalmargin"></div>
+        <div class="verticalmargin"></div>
 
-            <a id="btn_start" class="button button-primary">Draw sticky art</a>
+        <a id="btn_start" class="button button-primary">Draw sticky art</a>
 
       </div>
     </div>
