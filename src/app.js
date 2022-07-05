@@ -144,6 +144,8 @@ async function GetNewFrameLocation() {
 
 async function CreateNewFrame() { // find the most top right frame on the boars and create new one next to it
 
+    GetNewFrameLocation();
+
     let mywidth =  45 * (2 + resolution);
     let myheight = 45 * (2 + resolution);
     let my_x = newframe_left + mywidth/2 + 100; // margin 100px between frames
