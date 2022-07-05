@@ -31,9 +31,19 @@ let newframe_left=0;
 let newframe_top=0;
 
 
+
 // interactions
 window.onload = function() {
     GetNewFrameLocation(); // determine free space to draw a new frame on the board
+
+    let schortcut = ""
+    if (navigator.appVersion.indexOf('Mac') != -1) {
+        schortcut = "(⌘ + V)"
+    } else {
+        schortcut = "(Ctrl + V)"
+    }
+    document.getElementById('shortcut').innerHTML=schortcut;
+    
 };
 
 document.getElementById('resolution').onchange = function(){
