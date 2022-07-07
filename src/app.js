@@ -27,6 +27,11 @@ LoadImage(imageURL);
 
 let i=0;
 let j=0;
+let k=0;
+let l=0;
+let red_sum = 0; // used in determining average pixel color
+let green_sum = 0; // used in determining average pixel color
+let blue_sum = 0; // used in determining average pixel color
 let newframe_left=0;
 let newframe_top=0;
 
@@ -59,33 +64,42 @@ document.getElementById('btn_start').onclick = function() {
     // scan rows and columns of pasted image at intervals and draw corresponding sticky color
     i=0; // horizontal scan lines
     j=0; // vertical scan lines
+    k=0; // scan pixeltile horizontally
+    l=0; // scan pixeltile horizontally
 
-    // StickyDrawLoop();
-    
-    // setTimeout(function() { // add short delay between drawing stickies to relief sync buffer
-    //
-    //         // for (j=0; j<(resolution); j++) {
-    //
-    //         //     var pixelmid = (200/resolution)/2;
-    //         //     var pixel = context.getImageData(i*(200/resolution)+pixelmid, j*(200/resolution)+pixelmid, 1, 1).data;
-    //         //     var color = GetColorName(pixel[0],pixel[1],pixel[2]); // RGB value of pixel
-    //         //
-    //         //     AddSticky(i,j,color);
-    //         // }
-    //
-    //     i++;                      //  increment counter
-    //     if (i < resolution) {     //  if the counter < resolution, call the loop function
-    //         StickyDrawLoop();             //  again which will trigger another
-    //     }
-    //
-    // }, 50); // pace at 20 stickies per second
 
+    var scangridsize = 200/resolution // for example scan grid is 10px for a 20x20 sticky wall
+    console.log("scan grid size:" + scangridsize);
 
     for (i=0; i<(resolution); i++) {
         for (j=0; j<(resolution); j++) {
-            var pixelmid = (200/resolution)/2;
-            var pixel = context.getImageData(i*(200/resolution)+pixelmid, j*(200/resolution)+pixelmid, 1, 1).data;
-            var color = GetColorName(pixel[0],pixel[1],pixel[2]); // RGB value of pixel
+
+
+            // get the RGB value of the center pixel of scan square
+            // var pixelmid = (200/resolution)/2;
+            // var pixel = context.getImageData(i*(200/resolution)+pixelmid, j*(200/resolution)+pixelmid, 1, 1).data;
+            // var color = GetColorName(pixel[0],pixel[1],pixel[2]); // RGB value of pixel
+            // OR
+
+            // get average RGB value of a scan tile
+            var scangridsize = 200/resolution // for example scan grid is 10px for a 20x20 sticky wall
+            console.log("scan grid size:" + scangridsize);
+            red_sum = 0;
+            green_sum = 0;
+            blue_sum = 0;
+
+            // scan tile at the i,j location
+            for (k=0; k<scangridsize; k++) {
+                for (l=0; l<scangridsize; l++) {
+                    var subpixel = context.getImageData(i*(200/resolution)+k, j*(200/resolution)+l, 1, 1).data;
+                    red_sum = red_sum + subpixel[0]; // R value of pixel
+                    green_sum = green_sum + subpixel[1]; // G value of pixel
+                    blue_sum = blue_sum + subpixel[2]; // B value of pixel
+                }
+            }
+
+            //determine average (divide by square of scan grid size
+            var color = GetColorName((red_sum/Math.pow(scangridsize,2)), (green_sum/Math.pow(scangridsize,2)), (blue_sum/Math.pow(scangridsize,2))); // RGB value of pixel
 
             AddSticky(i,j,color);
         }
