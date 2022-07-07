@@ -31,10 +31,10 @@ let newframe_left=0;
 let newframe_top=0;
 
 
-
 // interactions
 window.onload = function() {
-    GetNewFrameLocation(); // determine free space to draw a new frame on the board
+
+    GetNewFrameLocation();
 
     let schortcut = ""
     if (navigator.appVersion.indexOf('Mac') != -1) {
@@ -46,20 +46,19 @@ window.onload = function() {
     
 };
 
+
 document.getElementById('resolution').onchange = function(){
     resolution = Number(document.getElementById('resolution').value);
 }
 
-document.getElementById('btn_start').onclick = function() {
 
-    ClosePanel(); // close app panel
+document.getElementById('btn_start').onclick = function() {
 
     CreateNewFrame();
 
     // scan rows and columns of pasted image at intervals and draw corresponding sticky color
     i=0; // horizontal scan lines
     j=0; // vertical scan lines
-    
 
     // StickyDrawLoop();
     
@@ -91,7 +90,10 @@ document.getElementById('btn_start').onclick = function() {
             AddSticky(i,j,color);
         }
     }
+
+    ClosePanel(); // close app panel
 }
+
 
 window.addEventListener('paste', function(e){
 
@@ -136,22 +138,6 @@ function LoadImage(src) {
 }
 
 
-async function GetNewFrameLocation() {
-    const allframes = await miro.board.get({
-        type: 'frame'
-    });
-
-    allframes.forEach(function(item) { // determing left most and top most free spot on the board
-        if ((item.x + item.width/2) > newframe_left) {
-            newframe_left = item.x + item.width/2;
-        }
-        if ((item.y - item.height/2) < newframe_top) {
-            newframe_top = item.y - item.height/2
-        }
-    })
-}
-
-
 async function CreateNewFrame() { // find the most top right frame on the boars and create new one next to it
 
     GetNewFrameLocation();
@@ -176,7 +162,21 @@ async function CreateNewFrame() { // find the most top right frame on the boars 
 }
 
 
+async function GetNewFrameLocation() {
 
+    const allframes = await miro.board.get({
+        type: 'frame'
+    });
+
+    allframes.forEach(function(item) { // determing left most and top most free spot on the board
+        if ((item.x + item.width/2) > newframe_left) {
+            newframe_left = item.x + item.width/2;
+        }
+        if ((item.y - item.height/2) < newframe_top) {
+            newframe_top = item.y - item.height/2
+        }
+    })
+}
 
 
 function GetColorName(r,g,b) { // find nearest sticky color that best matches the passed RGB value
@@ -223,6 +223,7 @@ async function AddSticky(o,p,mycolor) {
 
 
 async function ClosePanel() {
+
     await miro.board.ui.closePanel();
 }
 
