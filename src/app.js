@@ -109,10 +109,10 @@ document.getElementById('btn_start').onclick = function() {
 }
 
 
-document.getElementById('btn_feedback').onclick = function() {
-
-    window.location.href="mailto:cees@miro.com?subject=Feedback Miro sticky art app";
-}
+// document.getElementById('btn_feedback').onclick = function() {
+//
+//     document.location.href="mailto:cees@miro.com?subject=Feedback Miro sticky art app";
+// }
 
 
 window.addEventListener('paste', function(e){
