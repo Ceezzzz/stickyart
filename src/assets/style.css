@@ -53,6 +53,10 @@ body {
   color: var(--indigoAlpha40);
 }
 
+.warning {
+  color: var(--indigoAlpha40);
+}
+
 .canvas {
   position: relative;
   top:2px;
@@ -65,4 +69,52 @@ img {
 
 .button {
   text-decoration: none;
+}
+
+.feedback {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+}
+
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 12px 0;
+  border-radius: 4px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+
+  width: 120px;
+  top: -4px;
+  right: 120%;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%; /* To the right of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

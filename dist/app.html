@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
-    <script type="module" crossorigin src="/assets/app.1a358001.js"></script>
+    <script type="module" crossorigin src="/assets/app.f94576e7.js"></script>
     <link rel="modulepreload" href="/assets/style.7f2dd081.js">
-    <link rel="stylesheet" href="/assets/style.cacfd729.css">
+    <link rel="stylesheet" href="/assets/style.fa3a7b9c.css">
   </head>
   <body>
     
@@ -15,30 +15,42 @@
 
       <div class="cs1 ce12">
 
-          <div>Paste an image from your clipboard in the box below, set a grid size and instantly create a wall of stickies.</div>
+        <div class="p-large">Paste an image from your clipboard in the box below, set a grid size and instantly create a wall of stickies.</div>
+
 
         <div class="verticalmargin"></div>
 
         <div class="pastebox">
-            <div id="hint" class="hint">Paste image here<br /><span id="shortcut">---</span></div>
-          <canvas id="myCanvas" class="canvas" width="200" height="200"></canvas>
+        <div id="hint" class="hint">Paste image here<br /><span id="shortcut">---</span></div>
+        <canvas id="myCanvas" class="canvas" width="200" height="200"></canvas>
         </div>
 
         <div class="verticalmargin"></div>
 
         <select class="select" id="resolution">
-              <option value="10">10 x 10</option>
-              <option value="20" selected>20 x 20</option>
-              <option value="30">30 x 30</option>
-              <option value="40">40 x 40</option>
-              <option value="50">50 x 50</option>
+            <option value="10">10 x 10</option>
+            <option value="20" selected>20 x 20</option>
+            <option value="30">30 x 30</option>
+            <option value="40">40 x 40</option>
+            <option value="50">50 x 50</option>
         </select>
 
         <div class="verticalmargin"></div>
 
         <a id="btn_start" class="button button-primary">Draw sticky art</a>
 
+        <div class="p-medium warning">Dismiss any 'Syncing...Please wait' message with the 'Esc' key.</div>
+
+          <div id="btn_feedback" class="feedback">
+              <button class="button-icon button-icon-small icon-comment-feedback tooltip" type="button">
+                  <span class="p-medium tooltiptext">Send feedback</span>
+              </button>
+          </div>
+
       </div>
+
+
+
     </div>
 
     
