@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
-    <script type="module" crossorigin src="/assets/app.b28b12e3.js"></script>
+    <script type="module" crossorigin src="/assets/app.4f26c503.js"></script>
     <link rel="modulepreload" href="/assets/style.7f2dd081.js">
-    <link rel="stylesheet" href="/assets/style.fa3a7b9c.css">
+    <link rel="stylesheet" href="/assets/style.a112c523.css">
   </head>
   <body>
     
@@ -17,12 +17,11 @@
 
         <div class="p-large">Paste an image from your clipboard in the box below, set a grid size and instantly create a wall of stickies.</div>
 
-
         <div class="verticalmargin"></div>
 
         <div class="pastebox">
-        <div id="hint" class="hint">Paste image here<br /><span id="shortcut">---</span></div>
-        <canvas id="myCanvas" class="canvas" width="200" height="200"></canvas>
+            <div id="hint" class="hint">Paste image here<br /><span id="shortcut">---</span></div>
+            <canvas id="myCanvas" class="canvas" width="200" height="200"></canvas>
         </div>
 
         <div class="verticalmargin"></div>
@@ -41,11 +40,21 @@
 
         <div class="p-medium warning">Dismiss the 'Syncing...Please wait' pop-up with the 'Esc' key.</div>
 
-<!--          <div id="btn_feedback" class="feedback">-->
-<!--              <button class="button-icon button-icon-small icon-comment-feedback tooltip" type="button">-->
-<!--                  <span class="p-medium tooltiptext">Send feedback</span>-->
-<!--              </button>-->
-<!--          </div>-->
+          <div id="btn_feedback" class="feedback">
+              <button class="button-icon button-icon-small icon-comment-feedback tooltip" type="button">
+                  <span class="p-medium tooltiptext">Send feedback</span>
+              </button>
+          </div>
+
+          <div id="form_feedback" class="feedback" style="display: none">
+              <form action="https://dokhome.com/Dokhome/feedback_stickyart.php" method="post" target="dummyframe">
+                  <textarea class="input textarea" id="feedback" name="feedback"></textarea>
+                  <div class="verticalmargin"></div>
+                  <input id="btn_sendfeedback" class="button button-secondary" type="submit" value="Send">
+              </form>
+          </div>
+
+          <iframe name="dummyframe" id="dummyframe" style="display: none"></iframe>
 
       </div>
 
