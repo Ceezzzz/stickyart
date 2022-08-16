@@ -35,6 +35,11 @@ body {
   height: 24px;
 }
 
+.verticalmarginsmall {
+  width: 100%;
+  height: 16px;
+}
+
 .pastebox {
   width: 208px;
   height: 208px;
@@ -76,11 +81,12 @@ img {
   position: absolute;
   bottom: 32px;
   right: 32px;
+  margin-left: 32px;
 }
 
 
 .textarea {
-  height: 96px;
+  height: 80px;
   resize: none;
 }
 
