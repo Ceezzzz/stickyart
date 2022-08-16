@@ -109,10 +109,20 @@ document.getElementById('btn_start').onclick = function() {
 }
 
 
-// document.getElementById('btn_feedback').onclick = function() {
-//
-//     document.location.href="mailto:cees@miro.com?subject=Feedback Miro sticky art app";
-// }
+document.getElementById('btn_feedback').onclick = function() {
+// show form
+    document.getElementById('form_feedback').style.display = 'block';
+//hide button
+    document.getElementById('btn_feedback').style.display = 'none';
+}
+
+document.getElementById('btn_sendfeedback').onclick = function() {
+// show form
+    document.getElementById('form_feedback').style.display = 'none';
+//hide button
+    document.getElementById('btn_feedback').style.display = 'block';
+}
+
 
 
 window.addEventListener('paste', function(e){

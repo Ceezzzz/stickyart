@@ -57,6 +57,7 @@ body {
   color: var(--indigoAlpha40);
 }
 
+
 .canvas {
   position: relative;
   top:2px;
@@ -75,6 +76,12 @@ img {
   position: absolute;
   bottom: 32px;
   right: 32px;
+}
+
+
+.textarea {
+  height: 96px;
+  resize: none;
 }
 
 
