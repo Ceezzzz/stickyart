@@ -122,10 +122,6 @@ document.getElementById('btn_sendfeedback').onclick = function() {
 
 
 
-
-
-
-
 window.addEventListener('paste', function(e){
 
     if(e.clipboardData == false) return false;

@@ -78,8 +78,9 @@ img {
 }
 
 .feedback {
+  background-color: white;
   position: absolute;
-  bottom: 32px;
+  bottom: 20px;
   right: 32px;
   margin-left: 32px;
 }
