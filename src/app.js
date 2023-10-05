@@ -105,7 +105,7 @@ document.getElementById('btn_start').onclick = function() {
         }
     }
 
-    ClosePanel(); // close app panel
+    // ClosePanel(); // close app panel (removed for V4)
 }
 
 
@@ -249,8 +249,8 @@ async function AddSticky(o,p,mycolor) {
 }
 
 
-async function ClosePanel() {
-
-    await miro.board.ui.closePanel();
-}
+// async function ClosePanel() {
+//
+//     await miro.board.ui.closePanel();
+// }
 
